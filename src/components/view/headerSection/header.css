@@ -1,0 +1,32 @@
+.rich-text p{
+    font-size: medium;
+    margin: 15px 0px;
+    color: #252525 !important;
+    line-height: 1.5;
+}
+
+.rich-text strong{
+    font-size: x-large;
+    font-weight: 700;
+    color: #252525!important;
+}
+
+.rich-text li{
+    margin: 20px 0px;
+    line-height: 1.55;
+}
+
+.rich-text li strong{
+    font-size: large;
+}
+
+@media(max-width:768px){
+.rich-text p{
+    font-size: 0.9rem;
+}
+
+.rich-text strong{
+    font-size: 1.3rem;
+}
+
+}

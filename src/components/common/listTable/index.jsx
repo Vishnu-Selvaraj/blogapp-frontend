@@ -104,8 +104,8 @@ const ListTable = () => {
                 <td className="px-2 py-4 flex gap-4">
                   <button
                     className={`${
-                      values.is_published ? "px-2" : "px-3.5"
-                    } border py-0.5 mt-1 rounded cursor-pointer text-xs`}
+                      values.is_published ? "px-2 bg-red-500 hover:bg-white/80 hover:text-red-500/80" : "px-3.5 bg-green-500 hover:bg-white/80 hover:text-green-500/80 hover:border"
+                    } border py-0.5 mt-1 text-white/90 rounded cursor-pointer text-xs transition-all duration-300`}
                     onClick={() =>
                       handleBlogPublishStatus(
                         `/admin/ChangePublishStatus/${values.id}`
@@ -117,7 +117,7 @@ const ListTable = () => {
                   <Image
                     src={closeBtn}
                     alt="delete btn"
-                    className="cursor-pointer max-sm:w-7 max-xl:mr-3 hover:animate-spin duration-700"
+                    className="cursor-pointer max-sm:w-7 max-xl:mr-3 max-xs:w-17 hover:animate-spin duration-700"
                     onClick={() =>
                       handleBlogDelete(`/admin/deleteBlog/${values.id}`)
                     }

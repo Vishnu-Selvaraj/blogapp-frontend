@@ -190,6 +190,7 @@ const BlogForm = () => {
             <button
               className={`absolute bottom-1 right-2 ml-2 text-xs text-white bg-black/70 px-4 py-1.5 
               rounded hover:cursor-pointer hover:bg-gray-200 hover:text-black transition-all duration-500
+              max-sm:-bottom-4
               ${isPending ? "animate-pulse" : ""}
               `}
               onClick={(evt) => generateBlogContent(evt)}
@@ -199,7 +200,7 @@ const BlogForm = () => {
           </div>
           {/*------------ Category Field ------------ */}
 
-          <div className="flex flex-col w-40 my-5">
+          <div className="flex flex-col w-40 my-5 max-sm:mt-12">
             <label htmlFor="category">Blog Category</label>
             <select
               name="category"

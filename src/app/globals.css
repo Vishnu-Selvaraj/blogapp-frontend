@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+
+@theme {
+  --breakpoint-xs: 30rem;
+}
+
 :root {
   font-family: var(--font-Outfit-sans), sans-serif;
   --color-primary:#5044e5;

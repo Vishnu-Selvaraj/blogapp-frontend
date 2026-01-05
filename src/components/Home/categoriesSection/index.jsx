@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import { blogFormOptions } from "@/data/Database";
 import React from "react";
 import { useGetAllCategories } from "@/hooks/BlogsHooks";
 
@@ -12,7 +11,7 @@ const CategorySection = ({ setSelectedCategoryId }) => {
   );
 
   return (
-    <section className="flex justify-center gap-3 max-sm:gap-0 my-10 relative">
+    <section className="flex justify-center gap-3 max-sm:gap-0 max-xs:flex-wrap max-xs:gap-2 my-10 relative">
       {categoriesData?.data?.map((opt, index) => {
         return (
           <div

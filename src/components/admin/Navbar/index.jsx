@@ -28,7 +28,7 @@ const NavbarAdmin = ({ isUser }) => {
   return (
     <nav
       className={`py-3.5 h-[70px] flex justify-between ${
-        isUser ? "px-20 xl:px-32 max-sm:px-10" : "px-15 max-sm:px-8  shadow-sm"
+        isUser ? "px-20 xl:px-32 max-sm:px-5.5" : "px-15 max-sm:px-5.5 shadow-sm"
       }`}
     >
       <Link href={"/"}>

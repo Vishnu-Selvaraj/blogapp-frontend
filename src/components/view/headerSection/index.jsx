@@ -26,7 +26,7 @@ const ViewHeaderSection = ({ blogData }) => {
           </span>
         </p>
 
-        <h1 className="text-2xl sm:text-5xl font-semibold max-w-2xl mx-auto text-gray-800">
+        <h1 className="text-2xl sm:text-5xl font-semibold max-w-2xl mx-auto text-gray-800 max-sm:px-2">
           {blogData?.data?.title}
         </h1>
 
@@ -39,7 +39,7 @@ const ViewHeaderSection = ({ blogData }) => {
         </p>
       </div>
 
-      <div className="flex flex-col mx-auto justify-center max-[1100px]:mx-5 max-w-5xl my-10 mt-6">
+      <div className="flex flex-col mx-auto justify-center max-[1100px]:mx-5 max-w-5xl my-10 mt-6 max-sm:mt-2">
         {blogData?.data?.image && (
           <Image
             src={`${process.env.NEXT_PUBLIC_PROD_BASE_URL}${blogData.data.image}`}

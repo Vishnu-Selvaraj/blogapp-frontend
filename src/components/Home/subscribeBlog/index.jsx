@@ -20,7 +20,7 @@ const SubscribeBlog = () => {
       </p>
       <form
         method="post"
-        className="flex justify-center max-w-2xl w-full max-sm:w-100 h-12"
+        className="flex justify-center max-w-2xl w-full max-sm:w-100 h-12 max-sm:h-8 max-sm:px-5.5"
         onSubmit={(evt) => handleSubscription(evt)}
       >
         <input

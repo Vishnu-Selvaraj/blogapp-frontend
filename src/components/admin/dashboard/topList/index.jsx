@@ -7,12 +7,17 @@ import { useAdminGetBlogsComments, useGetAllBlogs } from "@/hooks/BlogsHooks";
 
 const TopLinkCards = () => {
   const { data } = useGetAllBlogs("GET", "/admin/getAllBlogs");
+  const { data: unpublishedData } = useAdminGetBlogsComments(
+    "GET",
+    `/admin/getDraftBlogs`
+  );
   const { data: commentsData } = useAdminGetBlogsComments(
     "GET",
     `/admin/getAllCommentsByIds?value=2`
   );
   dashboardMenu[0].count = data?.data?.total || 0;
   dashboardMenu[1].count = commentsData?.data?.total || 0;
+  dashboardMenu[2].count = unpublishedData?.data?.total || 0;
 
   return (
     <div className="flex flex-wrap gap-4">

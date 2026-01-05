@@ -6,7 +6,7 @@ import CheckAuth from "@/services/check_auth/CheckAuth";
 
 const AdminCommentPage = () => {
 
-  const [status,setStatus] = useState(false)
+  const [status,setStatus] = useState(false)  
   
   return (
     <CheckAuth>

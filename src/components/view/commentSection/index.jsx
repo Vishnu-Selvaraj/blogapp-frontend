@@ -10,10 +10,11 @@ const CommentSection = ({ userId, blogId }) => {
     blogId
   );
 
+
   const formatTimeDuration = (datestring) => {
     try {
       const now = new Date();
-      const past = new Date(datestring);
+      const past = new Date(datestring + "Z");
       const seconds = Math.floor((now - past) / 1000);
 
       const intervals = {

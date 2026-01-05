@@ -1,8 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import herobgImg from "../../../../public/assests/images/herobgImg.png";
-import blog1 from "../../../../public/assests/images/blog1.webp";
-import './header.css'
+import "./header.css";
 
 const ViewHeaderSection = ({ blogData }) => {
   return (
@@ -15,7 +14,7 @@ const ViewHeaderSection = ({ blogData }) => {
 
       <div className="text-center mt-20 text-gray-600">
         <p className="text-(--color-primary) py-4 font-medium">
-          Published on{" "}
+          Published on&nbsp;
           <span>
             {new Date(blogData?.data?.created_at)
               .toLocaleDateString("en-US", {
@@ -40,14 +39,17 @@ const ViewHeaderSection = ({ blogData }) => {
         </p>
       </div>
 
-      <div className="flex flex-col mx-auto justify-center max-xl:mx-5 max-w-5xl my-10 mt-6">
-        <Image
-          src={`${process.env.NEXT_PUBLIC_BASE_URL}/${blogData?.data?.image}`}
-          width={16}
-          height={9}
-          alt="blogImg"
-          className="rounded-3xl mb-5 w-full"
-        ></Image>
+      <div className="flex flex-col mx-auto justify-center max-[1100px]:mx-5 max-w-5xl my-10 mt-6">
+        {blogData?.data?.image && (
+          <Image
+            src={`${process.env.NEXT_PUBLIC_PROD_BASE_URL}${blogData.data.image}`}
+            width={1600}
+            height={900}
+            alt="blogImg"
+            priority
+            className="rounded-3xl w-full h-auto object-cover"
+          />
+        )}
 
         <div
           className="rich-text max-w-4xl mx-auto"

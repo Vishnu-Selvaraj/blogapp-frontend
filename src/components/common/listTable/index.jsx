@@ -8,9 +8,10 @@ import {
   useDeleteBlog,
 } from "@/hooks/BlogsHooks";
 import toast from "react-hot-toast";
+import Loader from "@/components/loaderComponent/Loader";
 
 const ListTable = () => {
-  const { data } = useGetAllBlogs("GET", "/admin/getAllBlogs");
+  const { data, isLoading } = useGetAllBlogs("GET", "/admin/getAllBlogs");
 
   const { mutateAsync: updateBlogPublishStatusMutateFn } =
     useUpdateBlogPublishStatus("PUT");
@@ -29,16 +30,29 @@ const ListTable = () => {
   };
 
   const handleBlogDelete = async (url) => {
+    const delId = url.split("/").at(-1);
     try {
-      const res = await deleteBlogMutateFn(url);
+      if ([1, 2, 3].includes(parseInt(delId))) {
+        toast.error("Deleting this blog is disabled in test mode.");
+      } else {
+        const res = await deleteBlogMutateFn(url);
 
-      if (res.status == 200) {
-        toast.success(res?.data?.message);
+        if (res.status == 200) {
+          toast.success(res?.data?.message);
+        }
       }
     } catch (err) {
       console.log("Error occured in handleBlogDelete func", { err });
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center mt-32">
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <section className="relative max-w-4xl h-[calc(100vh-220px)] overflow-y-auto overflow-x-auto shadow rounded-lg scrollbar-hide bg-white">

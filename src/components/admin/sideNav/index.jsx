@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation";
 const SideNavbar = () => {
   let pathname = usePathname();
 
-  //check that if /admin is path then set it to /admin/dashboard to make active class to sideNav option
+  //check that if /admin is path then set it to /admin/dashboard to make active className to sideNav option
   if(pathname == '/admin'){
     pathname = '/admin/dashboard'
   }

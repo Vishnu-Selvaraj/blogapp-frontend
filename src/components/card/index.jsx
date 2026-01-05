@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -6,7 +6,7 @@ const Card = ({ data }) => {
   return (
     <Link href={`/blog/${data.id}`} className="w-full rounded-lg overflow-hidden shadow-sm hover:scale-102 hover:shadow-[0_0_1px_var(--color-primary)] duration-300 cursor-pointer">
       <Image
-        src={`${process.env.NEXT_PUBLIC_BASE_URL}/${data?.image}`}
+        src={`${process.env.NEXT_PUBLIC_PROD_BASE_URL }${data?.image}`}
         alt="cardImg"
         width={16}
         height={9}

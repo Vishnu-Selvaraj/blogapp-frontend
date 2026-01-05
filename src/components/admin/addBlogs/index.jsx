@@ -29,7 +29,7 @@ const BlogForm = () => {
   //Hook used to fetch the Categories data
   const { data: categoriesData } = useGetAllCategories(
     "GET",
-    "/admin/getAllCategories",
+    "/admin/getAllCategories"
   );
 
   //Hook used to generate Description
@@ -71,17 +71,16 @@ const BlogForm = () => {
   }, [data]);
 
   const {
-    mutate: addBlogsMutateFn,
-    data: addBlogResponseData,
+    mutateAsync: addBlogsMutateFn,
     isPending: isAddBlogPending,
     isSuccess: isBlogAdded,
   } = useAddBlogs("POST", "/admin/addBlog");
 
-  const addBlogsReq = () => {
+  const addBlogsReq = async () => {
     let { title, sub_title, description, category, image, is_published } =
       formData;
     if (!title || !sub_title || !description || !category || !image) {
-      toast.error("All Fields are Required.")
+      toast.error("All Fields are Required.");
     } else {
       //Passing the request body as Form Data
       let payload = new FormData();
@@ -91,16 +90,17 @@ const BlogForm = () => {
       payload.append("category", formData.category);
       payload.append("image", formData.image);
       payload.append("is_published", formData.is_published ? 1 : 0);
-      const response = addBlogsMutateFn(payload);
-      if(addBlogResponseData?.status == 201){
-        toast.success(addBlogResponseData?.data?.message)
+      const response = await addBlogsMutateFn(payload);
+      // console.log(response, "hhhh");
+      if (response?.status == 201) {
+        toast.success(response?.data?.message);
       }
     }
   };
 
   //Only reset formdata on success to avoid re-rendering issue
   useEffect(() => {
-    if (isBlogAdded && addBlogResponseData?.data?.success) {
+    if (isBlogAdded) {
       setFormData({
         title: "",
         sub_title: "",
@@ -114,8 +114,7 @@ const BlogForm = () => {
       const fileInput = document.getElementById("image");
       if (fileInput) fileInput.value = "";
     }
-  }, [isBlogAdded, addBlogResponseData]);
-
+  }, [isBlogAdded]);
 
   return (
     <>

@@ -16,7 +16,7 @@ const QuillEditor = ({ onChange, value }) => {
       if (editorRef.current) {
         // Clear any existing content
         editorRef.current.innerHTML = "";
-        
+
         quillRef.current = new Quill(editorRef.current, {
           theme: "snow",
           placeholder: "Write some description",
@@ -27,20 +27,24 @@ const QuillEditor = ({ onChange, value }) => {
           if (quillRef.current) {
             const editor = quillRef.current.root;
             const container = quillRef.current.container;
-            
+
             // Set on editor
             editor.setAttribute("dir", "ltr");
             editor.style.setProperty("direction", "ltr", "important");
             editor.style.setProperty("text-align", "left", "important");
-            
+
             // Set on container
             container.setAttribute("dir", "ltr");
             container.style.setProperty("direction", "ltr", "important");
-            
+
             // Set on parent
             if (editorRef.current) {
               editorRef.current.setAttribute("dir", "ltr");
-              editorRef.current.style.setProperty("direction", "ltr", "important");
+              editorRef.current.style.setProperty(
+                "direction",
+                "ltr",
+                "important"
+              );
             }
           }
         }, 0);
@@ -66,27 +70,35 @@ const QuillEditor = ({ onChange, value }) => {
   }, [onChange]);
 
   useEffect(() => {
-    if (quillRef.current && value) {
-      const currentContent = quillRef.current.root.innerHTML;
-      
-      // Only update if content is different
-      if (currentContent !== value) {
-        const selection = quillRef.current.getSelection();
-        quillRef.current.clipboard.dangerouslyPasteHTML(value);
-        
-        // Restore cursor position if it existed
-        if (selection) {
-          quillRef.current.setSelection(selection);
-        }
-        
-        // Reapply LTR after pasting
-        setTimeout(() => {
-          if (quillRef.current) {
-            quillRef.current.root.setAttribute("dir", "ltr");
-            quillRef.current.root.style.setProperty("direction", "ltr", "important");
-          }
-        }, 0);
+    if (!quillRef.current) return;
+
+    const currentContent = quillRef.current.root.innerHTML;
+
+    // clear editor when value is empty
+    if (!value) {
+      quillRef.current.setText("");
+      return;
+    }
+
+    // Only update if content is different
+    if (currentContent !== value) {
+      const selection = quillRef.current.getSelection();
+      quillRef.current.clipboard.dangerouslyPasteHTML(value);
+
+      if (selection) {
+        quillRef.current.setSelection(selection);
       }
+
+      setTimeout(() => {
+        if (quillRef.current) {
+          quillRef.current.root.setAttribute("dir", "ltr");
+          quillRef.current.root.style.setProperty(
+            "direction",
+            "ltr",
+            "important"
+          );
+        }
+      }, 0);
     }
   }, [value]);
 
@@ -99,7 +111,7 @@ const QuillEditor = ({ onChange, value }) => {
         style={{
           direction: "ltr",
           textAlign: "left",
-          height:'250px'
+          height: "250px",
         }}
       />
       <style jsx global>{`
@@ -107,13 +119,13 @@ const QuillEditor = ({ onChange, value }) => {
           direction: ltr !important;
           text-align: left !important;
         }
-        
+
         .ql-editor {
           direction: ltr !important;
           text-align: left !important;
           unicode-bidi: normal !important;
         }
-        
+
         .ql-editor p,
         .ql-editor div,
         .ql-editor span,
@@ -121,7 +133,7 @@ const QuillEditor = ({ onChange, value }) => {
           direction: ltr !important;
           text-align: left !important;
         }
-        
+
         .ql-editor.ql-blank::before {
           left: 15px;
           right: auto;

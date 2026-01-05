@@ -2,7 +2,6 @@ import { Outfit } from "next/font/google";
 import "./globals.css";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "@/libs/mainQueryClient";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
 
 const outfitSans = Outfit({
@@ -29,9 +28,8 @@ export default function RootLayout({ children }) {
         }}
       />
       <html lang="en">
-        <body className={`${outfitSans.variable}`}>{children}</body>
+          <body className={`${outfitSans.variable}`}>{children}</body>
       </html>
-      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 }

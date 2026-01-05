@@ -1,24 +1,18 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  /* config options here */
   reactCompiler: true,
   reactStrictMode: false,
+
   images: {
     remotePatterns: [
       {
-        protocol: 'http',
-        hostname: 'localhost',
-        port: '7000',
+        protocol: 'https',
+        hostname: 'blogapp-backend-q7hl.onrender.com',
         pathname: '/uploads/**',
       },
     ],
     dangerouslyAllowSVG: true,
-    unoptimized: process.env.NODE_ENV === 'development',
   },
-  // experimental: {
-  //   allowMiddlewareResponseBody: true,
-  // },
-  
 };
 
 export default nextConfig;

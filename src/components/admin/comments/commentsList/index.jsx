@@ -8,6 +8,7 @@ import {
   useDeleteComment,
 } from "@/hooks/BlogsHooks";
 import toast from "react-hot-toast";
+import Loader from "@/components/loaderComponent/Loader";
 
 const CommentsList = ({ status }) => {
   const { data: commentsData, isLoading } = useAdminGetBlogsComments(
@@ -15,6 +16,7 @@ const CommentsList = ({ status }) => {
     `/admin/getAllCommentsByIds?value=${status ? 1 : 0}`
   );
 
+  console.log(commentsData, "data");
 
   const { mutateAsync: changeCmtStatusMutationFn } =
     useChangeCommentsStatus("PUT");
@@ -43,6 +45,14 @@ const CommentsList = ({ status }) => {
     }
   };
 
+  if (isLoading) {
+    return (
+      <div className="flex justify-center mt-32">
+        <Loader />
+      </div>
+    );
+  }
+
   return (
     <section className="relative max-w-3xl h-[calc(100vh-220px)] overflow-y-auto overflow-x-auto shadow rounded-lg scrollbar-hide bg-white">
       <table className="w-full text-gray-500">
@@ -65,8 +75,8 @@ const CommentsList = ({ status }) => {
               <tr className="order-y border-gray-300" key={index}>
                 <td className="px-5 py-4">
                   <div>
-                    <span className="font-medium text-gray-600">Blog</span> : A
-                    detailed step by step guide to manage your lifestyle
+                    <span className="font-medium text-gray-600">Blog</span> :
+                    {cmt.blog_title}
                   </div>
                   <div className="pt-5">
                     <p>

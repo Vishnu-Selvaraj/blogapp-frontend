@@ -121,7 +121,7 @@ const AdminLogin = () => {
           <h5>
             Create an account?
             <span className="pl-1 hover:text-(--color-primary) transition-colors duration-300 ease-in-out font-semibold">
-              <Link href={"/"}>SignUp</Link>
+              <Link href={"/signup"}>SignUp</Link>
             </span>
           </h5>
         </div>

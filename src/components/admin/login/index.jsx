@@ -9,8 +9,8 @@ import Link from "next/link";
 const AdminLogin = () => {
   let router = useRouter();
   const [formData, setFormData] = useState({
-    email: "",//admin@gmail.com
-    password: "",//Samplepass
+    email: "", //admin@gmail.com
+    password: "", //Samplepass
   });
 
   const handleChange = (evt) => {
@@ -41,8 +41,8 @@ const AdminLogin = () => {
         toast.success("Successfully Logined");
       }
     } catch (err) {
-      if (err.status == 401){
-        toast.error(err?.data?.detail)
+      if (err.status == 401) {
+        toast.error(err?.data?.detail);
       }
       console.log("Error occured in handleLogin on AdminLogin", { err });
     }

@@ -13,8 +13,6 @@ import Loader from "@/components/loaderComponent/Loader";
 const ListTable = () => {
   const { data, isLoading } = useGetAllBlogs("GET", "/admin/getAllBlogs");
 
-  console.log(data)
-
   const { mutateAsync: updateBlogPublishStatusMutateFn } =
     useUpdateBlogPublishStatus("PUT");
 

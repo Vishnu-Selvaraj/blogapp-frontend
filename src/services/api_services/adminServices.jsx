@@ -1,5 +1,10 @@
 import commonAPI from "../commonApi";
 
+export const signup = async (method,url,data) => {
+  const response = await commonAPI(method,url,data);
+  return response;
+};
+
 export const login = async (method,url,data) => {
   const response = await commonAPI(method,url,data);
   return response;

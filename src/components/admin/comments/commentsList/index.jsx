@@ -16,7 +16,7 @@ const CommentsList = ({ status }) => {
     `/admin/getAllCommentsByIds?value=${status ? 1 : 0}`
   );
 
-  console.log(commentsData, "data");
+  // console.log(commentsData, "data");
 
   const { mutateAsync: changeCmtStatusMutationFn } =
     useChangeCommentsStatus("PUT");
@@ -70,61 +70,74 @@ const CommentsList = ({ status }) => {
           </tr>
         </thead>
         <tbody className="text-left text-sm wrap-break-word">
-          {commentsData?.data?.comments?.map((cmt, index) => {
-            return (
-              <tr className="order-y border-gray-300" key={index}>
-                <td className="px-5 py-4">
-                  <div>
-                    <span className="font-medium text-gray-600">Blog</span> :
-                    {cmt.blog_title}
-                  </div>
-                  <div className="pt-5">
-                    <p>
-                      <span className="font-medium text-gray-600">Name</span> :
-                      {cmt.user_name}
-                    </p>
-                    <p>
-                      <span className="font-medium text-gray-600">Comment</span>{" "}
-                      : {cmt.content}
-                    </p>
-                  </div>
-                </td>
-                <td className="px-2 py-4 max-sm:hidden">
-                  {new Date(cmt.created_at).toLocaleDateString("en-US", {
-                    month: "numeric",
-                    day: "numeric",
-                    year: "numeric",
-                  })}
-                </td>
-                <td className="px-2 py-4">
-                  <div className="flex items-center justify-center gap-4">
-                    <button
-                      className={` ${
-                        cmt.is_approved
-                          ? "border-red-600 bg-red-100 text-red-600"
-                          : "border-green-600 bg-green-100 text-green-600"
-                      } text-xs border rounded-full px-3 py-1 hover:cursor-pointer`}
-                      onClick={() =>
-                        handleCmtStatusChange(
-                          `/admin/changeCmtStatus/${cmt.id}`
-                        )
-                      }
-                    >
-                      {cmt.is_approved ? "Unpublish" : "Publish"}
-                    </button>
-                    <Image
-                      src={trashIcon}
-                      alt="trash btn"
-                      className="cursor-pointer w-5 hover:scale-115 transition-all duration-300 max-md:mr-2"
-                      onClick={() =>
-                        handleDelteCmt(`/admin/deleteComment/${cmt.id}`)
-                      }
-                    ></Image>
-                  </div>
-                </td>
-              </tr>
-            );
-          })}
+          {commentsData?.data?.comments.length > 0 ? (
+            commentsData?.data?.comments?.map((cmt, index) => {
+              return (
+                <tr className="order-y border-gray-300" key={index}>
+                  <td className="px-5 py-4">
+                    <div>
+                      <span className="font-medium text-gray-600">Blog</span> :
+                      {cmt.blog_title}
+                    </div>
+                    <div className="pt-5">
+                      <p>
+                        <span className="font-medium text-gray-600">Name</span>{" "}
+                        :{cmt.user_name}
+                      </p>
+                      <p>
+                        <span className="font-medium text-gray-600">
+                          Comment
+                        </span>{" "}
+                        : {cmt.content}
+                      </p>
+                    </div>
+                  </td>
+                  <td className="px-2 py-4 max-sm:hidden">
+                    {new Date(cmt.created_at).toLocaleDateString("en-US", {
+                      month: "numeric",
+                      day: "numeric",
+                      year: "numeric",
+                    })}
+                  </td>
+                  <td className="px-2 py-4">
+                    <div className="flex items-center justify-center gap-4">
+                      <button
+                        className={` ${
+                          cmt.is_approved
+                            ? "border-red-600 bg-red-100 text-red-600"
+                            : "border-green-600 bg-green-100 text-green-600"
+                        } text-xs border rounded-full px-3 py-1 hover:cursor-pointer`}
+                        onClick={() =>
+                          handleCmtStatusChange(
+                            `/admin/changeCmtStatus/${cmt.id}`
+                          )
+                        }
+                      >
+                        {cmt.is_approved ? "Unpublish" : "Publish"}
+                      </button>
+                      <Image
+                        src={trashIcon}
+                        alt="trash btn"
+                        className="cursor-pointer w-5 hover:scale-115 transition-all duration-300 max-md:mr-2"
+                        onClick={() =>
+                          handleDelteCmt(`/admin/deleteComment/${cmt.id}`)
+                        }
+                      ></Image>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })
+          ) : (
+            <tr>
+              <td
+                colSpan={5}
+                className="text-center text-black/25 pt-10 font-semibold text-2xl max-md:text-xl"
+              >
+                No Comments found
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
     </section>

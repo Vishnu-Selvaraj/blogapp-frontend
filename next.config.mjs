@@ -5,6 +5,15 @@ const nextConfig = {
 
   images: {
     remotePatterns: [
+      //Development Config
+      // {
+      //   protocol: 'http',
+      //   hostname: 'localhost',
+      //   port:'7000',
+      //   pathname: '/uploads/**',
+      // },
+      //Production Config
+
       {
         protocol: 'https',
         hostname: 'blogapp-backend-q7hl.onrender.com',

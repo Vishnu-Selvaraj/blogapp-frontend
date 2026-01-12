@@ -1,16 +1,18 @@
 "use client";
 
-import { useAdminLogin } from "@/hooks/BlogsHooks";
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
+import { useAdminLogin, useAdminSignup } from "@/hooks/BlogsHooks";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
+import toast from "react-hot-toast";
 
-const AdminLogin = () => {
+const AdminSignup = () => {
   let router = useRouter();
   const [formData, setFormData] = useState({
-    email: "",//admin@gmail.com
-    password: "",//Samplepass
+    name: "",
+    email: "",
+    password: "",
+    confirmPass: "",
   });
 
   const handleChange = (evt) => {
@@ -21,30 +23,33 @@ const AdminLogin = () => {
     }));
   };
 
-  const { mutateAsync: loginMutateFn, isPending } = useAdminLogin(
+  const { mutateAsync: signupMutateFn, isPending } = useAdminSignup(
     "POST",
-    "/admin/login"
+    "/admin/signup"
   );
 
-  const handleLogin = async () => {
+  const handleSignup = async () => {
+    const { name, email, password, confirmPass } = formData;
+
     try {
-      let loginData = new FormData();
-      loginData.append("username", formData.email);
-      loginData.append("password", formData.password);
-      let res = await loginMutateFn(loginData);
-      if (res.status == 200) {
-        localStorage.setItem(
-          "session",
-          JSON.stringify(res?.data?.access_token)
-        );
-        router.push("/admin/dashboard");
-        toast.success("Successfully Logined");
+      if (!name || !email || !password || !confirmPass) {
+        toast.error("All fields are required.");
+      } else if (password != confirmPass) {
+        toast.error("Password not matched.");
+      } else {
+        let signupData = {
+          name: name,
+          email: email,
+          password: password,
+        };
+        let res = await signupMutateFn(signupData);
+        if (res.status == 201) {
+          router.push("/login");
+          toast.success("Successfully Created account");
+        }
       }
     } catch (err) {
-      if (err.status == 401){
-        toast.error(err?.data?.detail)
-      }
-      console.log("Error occured in handleLogin on AdminLogin", { err });
+      console.log("Error occured in handleSignup on AdminSignup", { err });
     }
   };
 
@@ -53,13 +58,26 @@ const AdminLogin = () => {
       <div className="flex flex-col items-center justify-center">
         <div className="w-full py-6 text-center">
           <h1 className="text-3xl font-bold">
-            <span className="text-(--color-primary)">Admin</span> Login
+            <span className="text-(--color-primary)">Admin</span> SignUp
           </h1>
           <p className="font-light">
-            Enter your credentials to access the admin panel
+            Get started by creating your admin account.
           </p>
         </div>
-        <form className="mt-6 w-full sm:max-w-md text-gray-600">
+        <form className="mt-3 w-full sm:max-w-md text-gray-600">
+          <div className="flex flex-col">
+            <label> Name </label>
+            <input
+              type="text"
+              required
+              name="name"
+              placeholder="Enter your Name"
+              className="border-b-2 border-gray-300 p-2 outline-none mb-6"
+              onChange={handleChange}
+              value={formData.name}
+            />
+          </div>
+
           <div className="flex flex-col">
             <label> Email </label>
             <input
@@ -84,12 +102,24 @@ const AdminLogin = () => {
               value={formData.password}
             />
           </div>
+          <div className="flex flex-col">
+            <label> Confirm Password </label>
+            <input
+              type="password"
+              name="confirmPass"
+              required
+              placeholder="Confirm your password"
+              className="border-b-2 border-gray-300 p-2 outline-none mb-6"
+              onChange={handleChange}
+              value={formData.confirmPass}
+            />
+          </div>
           <button
             type="button"
             className={`w-full py-3 ${
               isPending ? "bg-(--color-primary)/50" : ""
             } font-medium bg-(--color-primary) text-white rounded cursor-pointer hover:bg-primary/90 transition-all`}
-            onClick={handleLogin}
+            onClick={handleSignup}
             disabled={isPending}
           >
             {/*show a spinner while the login request pending*/}
@@ -113,15 +143,15 @@ const AdminLogin = () => {
                 </svg>
               </div>
             ) : (
-              "Login"
+              "Sign Up"
             )}
           </button>
         </form>
         <div className="py-2.5">
           <h5>
-            Create an account?
+            Already have an account?
             <span className="pl-1 hover:text-(--color-primary) transition-colors duration-300 ease-in-out font-semibold">
-              <Link href={"/"}>SignUp</Link>
+              <Link href={"/login"}>Login</Link>
             </span>
           </h5>
         </div>
@@ -130,4 +160,4 @@ const AdminLogin = () => {
   );
 };
 
-export default AdminLogin;
+export default AdminSignup;

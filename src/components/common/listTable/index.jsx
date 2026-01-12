@@ -13,6 +13,8 @@ import Loader from "@/components/loaderComponent/Loader";
 const ListTable = () => {
   const { data, isLoading } = useGetAllBlogs("GET", "/admin/getAllBlogs");
 
+  console.log(data)
+
   const { mutateAsync: updateBlogPublishStatusMutateFn } =
     useUpdateBlogPublishStatus("PUT");
 
@@ -77,7 +79,9 @@ const ListTable = () => {
           </tr>
         </thead>
         <tbody className="text-left text-sm wrap-break-word">
-          {data?.data?.blogs?.map((values, index) => {
+          {
+          data?.data?.blogs.length > 0 ? (
+            data?.data?.blogs?.map((values, index) => {
             return (
               <tr className="border-y border-gray-300" key={index}>
                 <td className="px-2 py-4">{index + 1}</td>
@@ -125,7 +129,14 @@ const ListTable = () => {
                 </td>
               </tr>
             );
-          })}
+          })
+
+          ):(
+            <tr>
+              <td colSpan={5} className="text-center text-black/25 pt-10 font-semibold text-2xl max-md:text-xl">No blog found</td>
+            </tr>
+          )
+          }
         </tbody>
       </table>
     </section>

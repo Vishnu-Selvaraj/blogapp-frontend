@@ -12,14 +12,30 @@ import {
   login,
   changeCommentStatus,
   deleteComment,
+  signup,
 } from "@/services/api_services/adminServices";
 import { useQuery, useMutation } from "@tanstack/react-query";
+
+export const useAdminSignup = (method, url) => {
+  return useMutation({
+    mutationFn: async (data) => {
+      const response = await signup(method, url, data);
+      return response;
+    },
+  });
+};
 
 export const useAdminLogin = (method, url) => {
   return useMutation({
     mutationFn: async (data) => {
       const response = await login(method, url, data);
       return response;
+    },
+    onSuccess: () => {
+      return (
+        queryClient.invalidateQueries(["blogs"]),
+        queryClient.invalidateQueries(["blogComments"])
+      );
     },
   });
 };

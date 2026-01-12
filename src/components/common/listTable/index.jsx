@@ -77,64 +77,68 @@ const ListTable = () => {
           </tr>
         </thead>
         <tbody className="text-left text-sm wrap-break-word">
-          {
-          data?.data?.blogs.length > 0 ? (
+          {data?.data?.blogs.length > 0 ? (
             data?.data?.blogs?.map((values, index) => {
-            return (
-              <tr className="border-y border-gray-300" key={index}>
-                <td className="px-2 py-4">{index + 1}</td>
-                <td className="px-2 py-4 max-sm:text-xs">{values.title}</td>
-                <td className="px-2 py-4 max-sm:hidden">
-                  {new Date(values.created_at)
-                    .toLocaleDateString("en-US", {
-                      weekday: "short",
-                      month: "short",
-                      day: "numeric",
-                      year: "numeric",
-                    })
-                    .replace(/,/gi, "")}
-                </td>
-                <td
-                  className={`px-2 py-4 max-sm:hidden ${
-                    values.is_published
-                      ? "text-green-500/75"
-                      : "text-red-500/75"
-                  }`}
-                >
-                  {values.is_published ? "Published" : "Unpublished"}
-                </td>
-                <td className="px-2 py-4 flex gap-4">
-                  <button
-                    className={`${
-                      values.is_published ? "px-2 bg-red-500 hover:bg-white/80 hover:text-red-500/80" : "px-3.5 bg-green-500 hover:bg-white/80 hover:text-green-500/80 hover:border"
-                    } border py-0.5 mt-1 text-white/90 rounded cursor-pointer text-xs transition-all duration-300`}
-                    onClick={() =>
-                      handleBlogPublishStatus(
-                        `/admin/ChangePublishStatus/${values.id}`
-                      )
-                    }
+              return (
+                <tr className="border-y border-gray-300" key={index}>
+                  <td className="px-2 py-4">{index + 1}</td>
+                  <td className="px-2 py-4 max-sm:text-xs">{values.title}</td>
+                  <td className="px-2 py-4 max-sm:hidden">
+                    {new Date(values.created_at)
+                      .toLocaleDateString("en-US", {
+                        weekday: "short",
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric",
+                      })
+                      .replace(/,/gi, "")}
+                  </td>
+                  <td
+                    className={`px-2 py-4 max-sm:hidden ${
+                      values.is_published
+                        ? "text-green-500/75"
+                        : "text-red-500/75"
+                    }`}
                   >
-                    {values.is_published ? "Unpublish" : "Publish"}
-                  </button>
-                  <Image
-                    src={closeBtn}
-                    alt="delete btn"
-                    className="cursor-pointer max-sm:w-7 max-xl:mr-3 max-xs:w-17 hover:animate-spin duration-700"
-                    onClick={() =>
-                      handleBlogDelete(`/admin/deleteBlog/${values.id}`)
-                    }
-                  ></Image>
-                </td>
-              </tr>
-            );
-          })
-
-          ):(
+                    {values.is_published ? "Published" : "Unpublished"}
+                  </td>
+                  <td className="px-2 py-4 flex gap-4">
+                    <button
+                      className={`${
+                        values.is_published
+                          ? "px-2 bg-red-500 hover:bg-white/80 hover:text-red-500/80"
+                          : "px-3.5 bg-green-500 hover:bg-white/80 hover:text-green-500/80 hover:border"
+                      } border py-0.5 mt-1 text-white/90 rounded cursor-pointer text-xs transition-all duration-300`}
+                      onClick={() =>
+                        handleBlogPublishStatus(
+                          `/admin/ChangePublishStatus/${values.id}`
+                        )
+                      }
+                    >
+                      {values.is_published ? "Unpublish" : "Publish"}
+                    </button>
+                    <Image
+                      src={closeBtn}
+                      alt="delete btn"
+                      className="cursor-pointer max-sm:w-7 max-xl:mr-3 max-xs:w-17 hover:animate-spin duration-700"
+                      onClick={() =>
+                        handleBlogDelete(`/admin/deleteBlog/${values.id}`)
+                      }
+                    ></Image>
+                  </td>
+                </tr>
+              );
+            })
+          ) : (
             <tr>
-              <td colSpan={5} className="text-center text-black/25 pt-10 font-semibold text-2xl max-md:text-xl">No blog found</td>
+              <td
+                colSpan={5}
+                className="text-center text-black/25 pt-10 font-semibold text-2xl max-md:text-xl"
+              >
+                No blog found
+              </td>
             </tr>
-          )
-          }
+          )}
         </tbody>
       </table>
     </section>
